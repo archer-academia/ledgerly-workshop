@@ -1,0 +1,50 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex01-claude-md/img/good-claude-md.png">
+<link rel="stylesheet" href="diagram.css"><title>Good CLAUDE.md</title>
+<style>
+.cols{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;}
+.cols > .card{padding:22px 24px;}
+.item{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--ink);}
+.item:first-of-type{border-top:0;}
+.item h3{font-size:24px;margin:0;}
+.item p{margin-top:2px;}
+.item .ex{font-family:var(--mono);font-size:13.5px;color:var(--blue);margin-top:4px;}
+.out{display:grid;grid-template-columns:1fr 26px 1fr;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--ink);}
+.out:first-of-type{border-top:0;}
+.out .to{font-family:var(--mono);font-size:13.5px;}
+.out .arrow{height:1.5px;}
+.refs .card h3{font-size:22px;}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 1 · How to write a good CLAUDE.md</div>
+  <h1>The only file in every session. Write each line on purpose</h1>
+  <p class="sub">Test for every line: would the agent get this wrong without it? If not, delete it, or move it somewhere that loads only when it's needed.</p>
+</header>
+<div class="cols">
+  <div class="card focus">
+    <div><span class="pill b">Put in · short, universal</span></div>
+    <div style="margin-top:10px">
+      <div class="item"><span class="num">01</span><div><h3>WHAT</h3><p>stack and a map of the code</p><div class="ex">FastAPI · SQLite · uv · api → services → repo</div></div></div>
+      <div class="item"><span class="num">02</span><div><h3>WHY</h3><p>what the parts are for, where decisions live</p><div class="ex">ADRs in docs/decisions/ · README is stale</div></div></div>
+      <div class="item"><span class="num">03</span><div><h3>HOW + verify</h3><p>real commands, and what "done" means</p><div class="ex">pytest · ruff · lint-imports, all green</div></div></div>
+      <div class="item"><span class="num">04</span><div><h3>How to work</h3><p>a few behaviour rules (Karpathy-style)</p><div class="ex">state assumptions · surgical changes · test first</div></div></div>
+    </div>
+  </div>
+  <div class="card alert">
+    <div><span class="pill r">Leave out · and where it goes instead</span></div>
+    <div style="margin-top:10px">
+      <div class="out"><p>formatting, style rules</p><div class="arrow"></div><span class="to">ruff + a hook (Ex 3)</span></div>
+      <div class="out"><p>house style the code can't show</p><div class="arrow"></div><span class="to">.claude/rules/ (Step 3)</span></div>
+      <div class="out"><p>rules for one folder</p><div class="arrow"></div><span class="to">src/…/CLAUDE.md (Step 2)</span></div>
+      <div class="out"><p>long docs, schemas, examples</p><div class="arrow"></div><span class="to">a pointer: "read docs/x.md when…"</span></div>
+      <div class="out"><p>copied code snippets</p><div class="arrow"></div><span class="to">file:line pointers (copies go stale)</span></div>
+      <div class="out"><p>your personal preferences</p><div class="arrow"></div><span class="to">CLAUDE.local.md · ~/.claude</span></div>
+    </div>
+  </div>
+</div>
+<div class="grid3 refs">
+  <div class="card"><h3>HumanLayer</h3><p>WHAT · WHY · HOW. Under 300 lines (theirs: under 60). "Never send an LLM to do a linter's job."</p></div>
+  <div class="card"><h3>Boris Cherny</h3><p>One team file in git, ~2.5k tokens. Every mistake becomes a line. Give Claude a way to verify.</p></div>
+  <div class="card"><h3>Karpathy guidelines</h3><p>Think before coding · simplicity first · surgical changes · goal-driven execution.</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 1 · CLAUDE.md + rules</span></footer>
+</div></body></html>

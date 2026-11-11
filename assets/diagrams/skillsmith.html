@@ -1,0 +1,28 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex02-skills/img/skillsmith.png">
+<link rel="stylesheet" href="diagram.css"><title>Skillsmith</title>
+<style>
+.st{min-height:200px;display:flex;flex-direction:column;gap:8px;}
+.st .cmd{font-family:var(--mono);font-weight:600;font-size:15px;}
+.st.focus .cmd{color:var(--blue);}
+.notes .card p{font-size:16px;line-height:1.45;margin-top:8px;}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 2 · Tool spotlight · Skillsmith</div>
+  <h1>A skill that <span class="blue">builds and audits</span> other skills</h1>
+  <p class="sub">Skills have no enforced structure, so every author writes them differently. Skillsmith (open source, MIT, pure markdown) adds a guided design interview, generators that follow a syntax spec, and an audit.</p>
+</header>
+<div class="row">
+  <div class="card st"><div class="k">0 · Install</div><div class="cmd">npx @chrisai/skillsmith --local</div><p>pure markdown, no hooks or MCP. <code>--local</code> = this project, not ~/.claude (the Ex 1 trap)</p></div>
+  <div class="arrow"></div>
+  <div class="card st"><div class="k">1 · Discover</div><div class="cmd">/skillsmith discover</div><p>an interview: identity, persona, scope, content, review → <code>SKILL-SPEC.md</code></p></div>
+  <div class="arrow"></div>
+  <div class="card st"><div class="k">2 · Scaffold</div><div class="cmd">/skillsmith scaffold</div><p>generates the skill's files from the spec, each type following its own spec</p></div>
+  <div class="arrow"></div>
+  <div class="card st focus"><div class="k blue">3 · Audit</div><div class="cmd">/skillsmith audit</div><p>checks existing skills against the specs → a compliance score, violations, what to fix first</p></div>
+</div>
+<div class="grid2 notes">
+  <div class="card"><span class="pill">How it fits Ex 2</span><p>Use <b>discover</b> to design ship-check before writing it, and <b>audit</b> as a second linter. Then the workshop's own checks decide: <code>skill_lint.py</code> (lecture options) and <code>skill_eval.py</code> (does it fire, stay quiet, beat no skill).</p></div>
+  <div class="card alert"><span class="pill r">Know before you use it</span><p>Third-party. It installs into <code>.claude/commands/</code> and uses its own file types (entry point, task, framework, template, context, checklist, rules). Check where its output lands: Ex 2's checks expect <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 2 · Skills</span></footer>
+</div></body></html>

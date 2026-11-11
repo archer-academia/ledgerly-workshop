@@ -1,276 +1,306 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Latent · Exercise 4 — MCP: Current Docs, Then a Gate</title>
+<title>Archer · Exercise 4 — MCP: Current Docs, Then a Gate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     LATENT · EXERCISE 4 — MCP + Context7 on Ledgerly
-     Built off exercise-template.html (terminal aesthetic),
-     plus: why / acceptance / progressive hints / reference reveal.
+     ARCHER · EXERCISE PAGE — Ledgerly workshop
+     Archer design system: Old Paper ground, Ink type and outlines,
+     Archer Blue for the focal points, Barlow Condensed + Instrument Sans.
      ============================================================ */
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Instrument+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
   :root{
-    --space-black:#0d0f0d;
-    --panel:#161a16;
-    --panel-2:#1c211c;
-    --border:#2a302a;
-    --green:#3ddc84;
-    --green-dim:#7fae8e;
-    --red:#EB323C;
-    --red-dark:#A12229;
-    --amber:#d9a441;
-    --silver:#A8B0A8;
-    --dove:#6a726a;
-    --steel-white:#FDFDFD;
+    color-scheme:light;
+    --archer-ink:#212121;
+    --archer-blue:#2A3EFF;
+    --archer-neon-yellow:#E5FF00;
+    --archer-red:#DA4033;
+    --archer-light-blue:#628AFF;
+    --archer-light-pink:#FFA3FF;
+    --archer-old-paper:#FFF9F2;
+    --archer-white:#FFFFFF;
+    --archer-blueish-white:#F8FBFF;
+    --archer-grey:#646464;
+
+    --font-display:"Barlow Condensed","Arial Narrow",sans-serif;
+    --font-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+    --font-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+
+    --line:1.5px solid var(--archer-ink);
+    --line-thin:1px solid var(--archer-ink);
+    --radius:1.4vmin;
+    --radius-sm:.8vmin;
+    --pill:999px;
+    --shadow-hard:.8vmin .8vmin 0 var(--archer-ink);
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
 
-  html,body{min-height:100%;background:var(--space-black);
-    font-family:'Space Grotesk',system-ui,sans-serif;color:var(--steel-white);
+  html,body{min-height:100%;background:var(--archer-old-paper);
+    font-family:var(--font-body);color:var(--archer-ink);
     -webkit-font-smoothing:antialiased;}
+  strong,b{font-weight:600;}
 
   .page{max-width:1600px;margin:0 auto;padding:3vmin 4vmin 22vmin;}
 
-  /* ---------- kicker + title ---------- */
-  .kicker{font-family:'Space Mono',monospace;font-size:1.5vmin;font-weight:700;letter-spacing:.35em;
-    text-transform:uppercase;color:var(--green);margin-bottom:1.6vmin;}
-  h1{font-size:8.5vmin;font-weight:700;line-height:1.0;letter-spacing:-.02em;margin-bottom:4vmin;}
-  .accent{color:var(--green);}
-  .accent-r{color:var(--red);}
+  /* ---------- top bar with the logo ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:2vmin;
+    padding-bottom:2.4vmin;margin-bottom:4vmin;border-bottom:var(--line-thin);}
+  .topbar .logo svg{height:max(40px,5vmin);width:auto;display:block;}
+  .topbar .course{font-family:var(--font-display);font-weight:600;font-size:2vmin;
+    letter-spacing:.02em;text-transform:uppercase;}
 
-  /* ---------- objective banner ---------- */
-  .objective{background:var(--panel);border:1px solid var(--border);
-    border-radius:1.4vmin;padding:3.5vmin 4vmin;margin-bottom:3vmin;}
-  .objective .label{font-family:'Space Mono',monospace;font-size:1.5vmin;font-weight:700;
-    letter-spacing:.25em;text-transform:uppercase;color:var(--green);
-    display:flex;align-items:center;gap:1.2vmin;margin-bottom:2vmin;}
-  .objective p{font-size:3vmin;line-height:1.45;color:var(--silver);max-width:92ch;}
-  .objective strong{color:var(--steel-white);font-weight:700;}
-  .objective code{font-family:'Space Mono',monospace;font-size:.8em;color:var(--green);}
+  /* ---------- kicker + title ---------- */
+  .kicker{font-family:var(--font-display);font-size:2vmin;font-weight:600;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--archer-grey);margin-bottom:1.6vmin;}
+  h1{font-family:var(--font-display);font-size:9vmin;font-weight:900;line-height:.92;
+    letter-spacing:.005em;text-transform:uppercase;margin-bottom:4vmin;max-width:24ch;}
+  .accent{color:var(--archer-blue);}
+  .accent-r{background:var(--archer-neon-yellow);color:var(--archer-ink);
+    border-radius:var(--radius-sm);padding:0 .15em;
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;}
+
+  /* shared label pill */
+  .objective .label,.infobox .label,.reference .label{display:inline-flex;align-items:center;gap:1vmin;
+    font-family:var(--font-display);font-size:1.7vmin;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-blueish-white);background:var(--archer-ink);
+    border-radius:var(--pill);padding:.5vmin 1.6vmin;margin-bottom:2vmin;}
+
+  /* ---------- objective banner (the page's one blue card) ---------- */
+  .objective{background:var(--archer-blue);color:var(--archer-blueish-white);
+    border-radius:var(--radius);padding:3.5vmin 4vmin;margin-bottom:3vmin;}
+  .objective .label{background:var(--archer-blueish-white);color:var(--archer-ink);}
+  .objective p{font-size:2.8vmin;line-height:1.4;max-width:92ch;}
+  .objective strong{font-weight:700;}
+  .objective code{font-family:var(--font-mono);font-size:.82em;}
 
   /* learning objectives */
-  .goals{display:grid;grid-template-columns:repeat(5,1fr);gap:1.4vmin;margin-bottom:3vmin;}
-  .goal{background:var(--panel);border:1px solid var(--border);border-radius:1vmin;padding:2vmin 2.2vmin;}
-  .goal .gi{font-size:2.6vmin;margin-bottom:1vmin;}
-  .goal p{font-size:1.8vmin;line-height:1.45;color:var(--silver);}
-  .goal p strong{color:var(--steel-white);}
+  .goals{display:grid;grid-template-columns:repeat(5,1fr);gap:1.4vmin;margin-bottom:3vmin;counter-reset:goal;}
+  .goal{background:var(--archer-white);border:var(--line);border-radius:var(--radius);padding:2vmin 2.2vmin;}
+  .goal .gi{font-size:0;margin-bottom:1.2vmin;counter-increment:goal;}
+  .goal .gi::before{content:counter(goal,decimal-leading-zero);}
+  .goal p{font-size:1.85vmin;line-height:1.4;}
+
+  /* number pill (goals, lessons, ladder) */
+  .goal .gi::before,.lesson .li::before,.rung .ri{display:inline-flex;align-items:center;justify-content:center;
+    min-width:5vmin;height:3.6vmin;padding:0 1vmin;border-radius:var(--pill);
+    background:var(--archer-light-pink);border:1.5px solid var(--archer-ink);color:var(--archer-ink);
+    font-family:var(--font-display);font-weight:900;font-size:2.2vmin;line-height:1;letter-spacing:.02em;}
 
   /* ---------- workflow rail ---------- */
   .rail{display:flex;gap:1.2vmin;margin-bottom:4vmin;flex-wrap:wrap;}
-  .rail .node{flex:1;min-width:14vmin;background:var(--panel);border:1px solid var(--border);
-    border-radius:1vmin;padding:1.8vmin 1.6vmin;text-align:center;cursor:pointer;transition:.2s;
-    text-decoration:none;color:inherit;}
-  .rail .node:hover{border-color:var(--green-dim);}
-  .rail .node .k{font-family:'Space Mono',monospace;font-size:1.2vmin;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--dove);margin-bottom:.8vmin;}
-  .rail .node .v{font-size:2.2vmin;font-weight:700;}
-  .rail .node .t{font-family:'Space Mono',monospace;font-size:1.3vmin;color:var(--dove);margin-top:.6vmin;}
-  .rail .node.red{border-color:var(--red-dark);}
-  .rail .node.red .v{color:var(--red);}
-  .rail .node.done{border-color:var(--green);background:#122016;}
-  .rail .node.done .v{color:var(--green);}
-  .rail .node.done .k::after{content:" ✓";color:var(--green);}
-  .rail .arrow{align-self:center;color:var(--dove);font-size:2.2vmin;}
+  .rail .node{flex:1;min-width:14vmin;background:var(--archer-white);border:var(--line);
+    border-radius:var(--radius);padding:1.8vmin 1.6vmin;text-align:center;cursor:pointer;
+    transition:border-color .15s,color .15s;text-decoration:none;color:inherit;}
+  .rail .node:hover{border-color:var(--archer-blue);}
+  .rail .node .k{font-family:var(--font-display);font-weight:600;font-size:1.5vmin;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-grey);margin-bottom:.6vmin;}
+  .rail .node .v{font-family:var(--font-display);font-size:2.6vmin;font-weight:700;line-height:1.05;}
+  .rail .node .t{font-size:1.4vmin;color:var(--archer-grey);margin-top:.6vmin;}
+  .rail .node.red .v{color:var(--archer-red);}
+  .rail .node.done{border:2.5px solid var(--archer-blue);}
+  .rail .node.done .v{color:var(--archer-blue);}
+  .rail .node.done .k::after{content:" ✓";color:var(--archer-blue);}
+  .rail .arrow{align-self:center;color:var(--archer-ink);font-size:2.2vmin;}
 
   /* ---------- layout: steps (left) + side panel (right) ---------- */
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,0.42fr);gap:3vmin;align-items:start;}
 
   .steps{display:flex;flex-direction:column;gap:2.4vmin;}
-  .step{background:var(--panel);border:1px solid var(--border);border-radius:1.2vmin;
+  .step{background:var(--archer-white);border:var(--line);border-radius:var(--radius);
     padding:3vmin 3.5vmin;display:grid;grid-template-columns:auto minmax(0,1fr);gap:3vmin;align-items:start;
     scroll-margin-top:3vmin;transition:border-color .2s;}
-  .step.red-step{border-color:var(--red-dark);}
-  .step.done{border-color:var(--green);}
-  .step .n{font-family:'Space Mono',monospace;font-size:5vmin;font-weight:700;
-    color:var(--green);line-height:1;}
-  .step.red-step .n{color:var(--red);}
+  .step.red-step{border-color:var(--archer-red);}
+  .step.done{border:2.5px solid var(--archer-blue);}
+  .step .n{font-family:var(--font-display);font-size:6.5vmin;font-weight:900;
+    color:var(--archer-blue);line-height:.85;min-width:4vmin;}
+  .step.red-step .n{color:var(--archer-red);}
   .step .head{display:flex;align-items:baseline;justify-content:space-between;gap:2vmin;}
-  .step h3{font-size:3.6vmin;font-weight:700;line-height:1.1;}
-  .chip{font-family:'Space Mono',monospace;font-size:1.4vmin;color:var(--silver);
-    border:1px solid var(--border);border-radius:99px;padding:.4vmin 1.4vmin;white-space:nowrap;}
-  .chip.r{color:var(--red);border-color:var(--red-dark);}
-  .step code,.cmd{font-family:'Space Mono',monospace;font-size:.82em;
-    background:var(--panel-2);border:1px solid var(--border);border-radius:.5vmin;
-    padding:.15em .5em;color:var(--green);white-space:nowrap;}
-  .step em{color:var(--steel-white);font-style:italic;}
-  .task{font-size:2.2vmin;line-height:1.5;color:var(--silver);margin-top:1.6vmin;}
-  .task strong{color:var(--steel-white);}
+  .step h3{font-family:var(--font-display);font-size:4vmin;font-weight:600;line-height:1;}
+  .chip{font-family:var(--font-display);font-weight:600;font-size:1.6vmin;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-ink);border:1.5px solid var(--archer-ink);
+    border-radius:var(--pill);padding:.3vmin 1.4vmin;white-space:nowrap;}
+  .chip.r{color:var(--archer-white);background:var(--archer-red);border-color:var(--archer-red);}
+  .step code,.cmd{font-family:var(--font-mono);font-size:.8em;
+    background:var(--archer-old-paper);border:1px solid var(--archer-ink);border-radius:.5vmin;
+    padding:.1em .45em;color:var(--archer-ink);white-space:nowrap;}
+  .step em{font-style:italic;}
+  .task{font-size:2.15vmin;line-height:1.5;margin-top:1.6vmin;}
 
-  /* verbatim prompt / shell boxes */
-  .promptbox{margin-top:2vmin;background:#0a0c0a;border:1px solid var(--border);
-    border-left:5px solid var(--green);border-radius:.9vmin;padding:2.2vmin 2.6vmin;position:relative;}
-  .promptbox .tag{font-family:'Space Mono',monospace;font-size:1.3vmin;font-weight:700;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:1.4vmin;
+  /* verbatim prompt / shell boxes: Ink fields, like the dark folds */
+  .promptbox{margin-top:2vmin;background:var(--archer-ink);color:var(--archer-blueish-white);
+    border-left:.8vmin solid var(--archer-neon-yellow);border-radius:var(--radius);
+    padding:2.2vmin 2.6vmin;position:relative;}
+  .promptbox .tag{font-family:var(--font-display);font-size:1.6vmin;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--archer-neon-yellow);margin-bottom:1.4vmin;
     display:flex;justify-content:space-between;align-items:center;gap:2vmin;}
-  .promptbox p{font-family:'Space Mono',monospace;font-size:1.9vmin;line-height:1.55;color:var(--steel-white);}
+  .promptbox p{font-family:var(--font-mono);font-size:1.85vmin;line-height:1.6;color:var(--archer-blueish-white);}
   .promptbox p + p{margin-top:1.2vmin;}
-  .promptbox.shell{border-left-color:var(--amber);}
-  .promptbox.shell .tag{color:var(--amber);}
+  .promptbox.shell{border-left-color:var(--archer-light-pink);}
+  .promptbox.shell .tag{color:var(--archer-light-pink);}
   .promptbox.shell p{white-space:pre-wrap;}
-  .promptbox .c-cmt{color:var(--dove);}
-  .copy{font-family:'Space Mono',monospace;font-size:1.2vmin;letter-spacing:.1em;
-    background:transparent;border:1px solid var(--border);color:var(--silver);
-    border-radius:.5vmin;padding:.4vmin 1vmin;cursor:pointer;}
-  .copy:hover{border-color:var(--green);color:var(--green);}
-  .copy.ok{border-color:var(--green);color:var(--green);}
+  .promptbox .c-cmt{color:var(--archer-light-blue);}
+  .promptbox code,.out code{background:transparent;border-color:var(--archer-blueish-white);color:inherit;}
+  .copy{font-family:var(--font-display);font-weight:600;font-size:1.5vmin;letter-spacing:.04em;
+    text-transform:uppercase;background:transparent;border:1.5px solid var(--archer-blueish-white);
+    color:var(--archer-blueish-white);border-radius:var(--pill);padding:.3vmin 1.3vmin;cursor:pointer;
+    transition:background-color .15s,color .15s;}
+  .copy:hover,.copy.ok{background:var(--archer-blueish-white);color:var(--archer-ink);}
 
   /* why + acceptance */
-  .why{margin-top:2.2vmin;font-size:2vmin;line-height:1.55;color:var(--silver);
-    border-left:3px solid var(--green-dim);padding-left:1.8vmin;}
-  .why b{font-family:'Space Mono',monospace;font-size:1.3vmin;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--green-dim);margin-right:1vmin;}
-  .why strong{color:var(--steel-white);}
+  .why{margin-top:2.2vmin;font-size:2vmin;line-height:1.55;
+    border-left:3px solid var(--archer-blue);padding-left:1.8vmin;}
+  .why b{font-family:var(--font-display);font-weight:600;font-size:1.7vmin;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-blue);margin-right:1vmin;}
   .accept{margin-top:2vmin;}
-  .accept .lbl{font-family:'Space Mono',monospace;font-size:1.3vmin;font-weight:700;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--steel-white);margin-bottom:1.2vmin;}
+  .accept .lbl{font-family:var(--font-display);font-size:1.8vmin;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;margin-bottom:1.2vmin;}
   .checks{display:flex;flex-direction:column;gap:1vmin;}
-  .checks div{font-size:2vmin;line-height:1.45;color:var(--silver);
-    padding-left:3.2vmin;position:relative;}
-  .checks div::before{content:"☐";position:absolute;left:0;color:var(--green);
-    font-family:'Space Mono',monospace;}
-  .checks div strong{color:var(--steel-white);}
+  .checks div{font-size:2vmin;line-height:1.45;padding-left:3.2vmin;position:relative;}
+  .checks div::before{content:"";position:absolute;left:0;top:.35em;width:1.8vmin;height:1.8vmin;
+    border:1.5px solid var(--archer-blue);border-radius:.4vmin;}
 
-  /* expected red output */
-  .out{margin-top:1.6vmin;font-family:'Space Mono',monospace;font-size:1.65vmin;line-height:1.6;
-    background:#0a0c0a;border:1px solid var(--border);border-radius:.9vmin;padding:1.8vmin 2.4vmin;
-    color:var(--silver);white-space:pre;overflow-x:auto;}
-  .out .f{color:var(--red);font-weight:700;}
-  .out .p{color:var(--green);}
-  .out .d{color:var(--dove);}
+  /* expected output */
+  .out{margin-top:1.6vmin;font-family:var(--font-mono);font-size:1.65vmin;line-height:1.65;
+    background:var(--archer-ink);border-radius:var(--radius);padding:1.8vmin 2.4vmin;
+    color:var(--archer-blueish-white);white-space:pre;overflow-x:auto;}
+  .out .f{background:var(--archer-red);color:var(--archer-white);font-weight:600;border-radius:.4vmin;padding:0 .3em;}
+  .out .p{color:var(--archer-neon-yellow);}
+  .out .d{color:var(--archer-light-blue);}
 
   /* progressive hints */
   .hints{margin-top:2.2vmin;display:flex;flex-direction:column;gap:1vmin;}
-  .hints .hl{font-family:'Space Mono',monospace;font-size:1.3vmin;font-weight:700;
-    letter-spacing:.22em;text-transform:uppercase;color:var(--amber);}
-  .hints details{background:var(--panel-2);border:1px solid var(--border);border-radius:.8vmin;}
+  .hints .hl{font-family:var(--font-display);font-size:1.8vmin;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;}
+  .hints details{background:var(--archer-old-paper);border:var(--line-thin);border-radius:var(--radius-sm);}
   .hints summary{list-style:none;cursor:pointer;padding:1.2vmin 1.8vmin;font-size:1.9vmin;
-    color:var(--silver);display:flex;gap:1.2vmin;align-items:center;user-select:none;}
+    display:flex;gap:1.2vmin;align-items:center;user-select:none;}
   .hints summary::-webkit-details-marker{display:none;}
-  .hints summary .lv{font-family:'Space Mono',monospace;font-size:1.3vmin;color:var(--amber);
-    border:1px solid #5a4620;border-radius:.4vmin;padding:.2vmin .8vmin;}
-  .hints details[open] summary{color:var(--steel-white);border-bottom:1px solid var(--border);}
-  .hints details.locked{opacity:.38;pointer-events:none;}
-  .hints details.locked summary::after{content:"🔒 open the previous hint first";margin-left:auto;
-    font-family:'Space Mono',monospace;font-size:1.2vmin;color:var(--dove);}
-  .hints .body{padding:1.6vmin 2vmin;font-size:1.9vmin;line-height:1.55;color:var(--silver);}
-  .hints .body strong{color:var(--steel-white);}
-  pre.codeblock{font-family:'Space Mono',monospace;font-size:1.6vmin;line-height:1.55;
-    background:#0a0c0a;border:1px solid var(--border);border-radius:.8vmin;padding:1.6vmin 2vmin;
-    color:var(--steel-white);white-space:pre;overflow-x:auto;margin-top:1vmin;}
-  pre.codeblock .cm{color:var(--dove);}
-  pre.codeblock .hl{color:var(--green);}
-  pre.codeblock .fn{color:var(--amber);}
+  .hints summary .lv{font-family:var(--font-display);font-weight:600;font-size:1.5vmin;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-ink);border:1.5px solid var(--archer-ink);
+    border-radius:var(--pill);padding:.15vmin 1vmin;white-space:nowrap;}
+  .hints details[open] summary{border-bottom:var(--line-thin);font-weight:600;}
+  .hints details[open] summary .lv{background:var(--archer-ink);color:var(--archer-blueish-white);}
+  .hints details.locked{opacity:.4;pointer-events:none;}
+  .hints details.locked summary::after{content:"Open the previous hint first";margin-left:auto;
+    font-size:1.4vmin;color:var(--archer-grey);}
+  .hints .body{padding:1.6vmin 2vmin;font-size:1.9vmin;line-height:1.55;}
+  pre.codeblock{font-family:var(--font-mono);font-size:1.6vmin;line-height:1.6;
+    background:var(--archer-ink);border-radius:var(--radius-sm);padding:1.6vmin 2vmin;
+    color:var(--archer-blueish-white);white-space:pre;overflow-x:auto;margin-top:1vmin;}
+  pre.codeblock .cm{color:var(--archer-light-blue);}
+  pre.codeblock .hl{color:var(--archer-neon-yellow);}
+  pre.codeblock .fn{color:var(--archer-light-pink);}
 
+  /* buttons: secondary outline, primary Blue */
   .stepfoot{margin-top:2.4vmin;display:flex;justify-content:flex-end;}
-  .donebtn{font-family:'Space Mono',monospace;font-size:1.5vmin;background:var(--panel-2);
-    border:1px solid var(--border);color:var(--silver);border-radius:.7vmin;padding:1vmin 1.8vmin;cursor:pointer;}
-  .donebtn:hover{border-color:var(--green);color:var(--green);}
-  .step.done .donebtn{background:var(--green);color:#04210f;border-color:var(--green);font-weight:700;}
+  .donebtn,.unlock{font-family:var(--font-display);font-weight:600;font-size:2vmin;letter-spacing:.01em;
+    border-radius:var(--pill);padding:.9vmin 2.2vmin;cursor:pointer;
+    transition:background-color .15s,color .15s,border-color .15s;}
+  .donebtn{background:transparent;border:2.5px solid var(--archer-ink);color:var(--archer-ink);}
+  .donebtn:hover{color:var(--archer-blue);border-color:var(--archer-blue);}
+  .step.done .donebtn{background:var(--archer-blue);color:var(--archer-blueish-white);border-color:var(--archer-blue);}
+  .donebtn:focus-visible,.unlock:focus-visible,.copy:focus-visible,.timer button:focus-visible,.rail .node:focus-visible{
+    outline:3px solid var(--archer-blue);outline-offset:3px;}
 
   /* side panel */
   .side{display:flex;flex-direction:column;gap:3vmin;position:sticky;top:3vmin;}
-  .infobox{background:var(--panel);border:1px solid var(--border);
-    border-radius:1.4vmin;padding:3vmin;}
-  .infobox .label{font-family:'Space Mono',monospace;font-size:1.3vmin;font-weight:700;
-    letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:2vmin;}
-  .infobox p{font-size:1.9vmin;line-height:1.6;color:var(--silver);}
-  .infobox p strong{color:var(--steel-white);}
+  .infobox{background:var(--archer-white);border:var(--line);border-radius:var(--radius);padding:3vmin;}
+  .infobox p{font-size:1.9vmin;line-height:1.55;}
   .infobox p + p{margin-top:1.4vmin;}
-  .infobox .mono{font-family:'Space Mono',monospace;font-size:1.55vmin;color:var(--green);}
-  .infobox.ok{border-color:#245a39;}
-  .infobox.ok .label{color:var(--green);}
+  .infobox .mono{font-family:var(--font-mono);font-size:1.55vmin;color:var(--archer-blue);}
+  .infobox.ok .label{background:var(--archer-blue);}
 
   /* hierarchy ladder */
-  .ladder{display:flex;flex-direction:column;gap:.9vmin;}
+  .ladder{display:flex;flex-direction:column;gap:.9vmin;counter-reset:rung;}
   .rung{display:grid;grid-template-columns:auto 1fr;gap:1.4vmin;align-items:start;
-    background:var(--panel-2);border:1px solid var(--border);border-radius:.8vmin;padding:1.2vmin 1.4vmin;}
-  .rung .ri{font-size:2.2vmin;line-height:1.2;}
-  .rung .rp{font-family:'Space Mono',monospace;font-size:1.45vmin;color:var(--green);}
-  .rung .rd{font-size:1.65vmin;color:var(--silver);line-height:1.4;margin-top:.3vmin;}
-  .rung .rd b{color:var(--steel-white);font-weight:600;}
-  .rung.trap{border-color:var(--red-dark);}
-  .rung.trap .rp{color:var(--red);}
+    background:var(--archer-old-paper);border:var(--line-thin);border-radius:var(--radius-sm);padding:1.2vmin 1.4vmin;
+    counter-increment:rung;}
+  .rung .ri{min-width:4.4vmin;height:3.2vmin;font-size:1.9vmin;}
+  .rung .ri:empty::before{content:counter(rung);}
+  .rung .rp{font-family:var(--font-mono);font-size:1.45vmin;font-weight:600;color:var(--archer-ink);}
+  .rung .rd{font-size:1.65vmin;line-height:1.4;margin-top:.3vmin;}
+  .rung.trap{border:1.5px solid var(--archer-red);}
+  .rung.trap .rp{color:var(--archer-red);}
 
-  /* warning box variant */
-  .warn{background:#1f1414;border:1px solid var(--red-dark);text-align:center;}
-  .warn .big{font-size:3vmin;margin-bottom:1vmin;}
-  .warn .head{color:var(--red);font-weight:700;font-size:2.4vmin;margin-bottom:.6vmin;}
-  .warn .note{font-family:'Space Mono',monospace;font-size:1.5vmin;color:var(--green-dim);line-height:1.5;}
+  /* warning box: a status mark, so Red */
+  .warn{border:2px solid var(--archer-red);text-align:center;}
+  .warn .big:empty{display:none;}
+  .warn .head{color:var(--archer-red);font-family:var(--font-display);font-weight:700;font-size:3vmin;margin-bottom:.6vmin;}
+  .warn .note{font-family:var(--font-mono);font-size:1.5vmin;line-height:1.5;}
 
   /* commands cheat list */
-  .cmds{display:flex;flex-direction:column;gap:1vmin;}
+  .cmds{display:flex;flex-direction:column;gap:1.1vmin;}
   .cmds div{display:grid;grid-template-columns:1fr;gap:.2vmin;}
-  .cmds .c{font-family:'Space Mono',monospace;font-size:1.45vmin;color:var(--green);}
-  .cmds .e{font-size:1.6vmin;color:var(--dove);}
+  .cmds .c{font-family:var(--font-mono);font-size:1.45vmin;font-weight:600;color:var(--archer-blue);}
+  .cmds .e{font-size:1.6vmin;color:var(--archer-grey);}
 
   /* ---------- diagnose table ---------- */
   table.diag{width:100%;border-collapse:collapse;margin-top:2vmin;font-size:1.8vmin;}
-  table.diag th{font-family:'Space Mono',monospace;font-size:1.3vmin;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--dove);text-align:left;padding:1vmin 1.2vmin;border-bottom:1px solid var(--border);}
-  table.diag td{padding:1vmin 1.2vmin;border-bottom:1px solid #222822;color:var(--silver);}
-  table.diag td:first-child{font-family:'Space Mono',monospace;color:var(--steel-white);font-size:1.6vmin;}
-  table.diag input{width:2.2vmin;height:2.2vmin;accent-color:var(--green);}
+  table.diag th{font-family:var(--font-display);font-weight:600;font-size:1.6vmin;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--archer-blueish-white);background:var(--archer-ink);
+    text-align:left;padding:1vmin 1.2vmin;}
+  table.diag th:first-child{border-radius:var(--radius-sm) 0 0 var(--radius-sm);}
+  table.diag th:last-child{border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+  table.diag td{padding:1vmin 1.2vmin;border-bottom:var(--line-thin);}
+  table.diag td:first-child{font-family:var(--font-mono);font-size:1.6vmin;}
+  table.diag input{width:2.2vmin;height:2.2vmin;accent-color:var(--archer-blue);}
 
   /* ---------- reference implementation ---------- */
-  .reference{margin-top:4vmin;background:var(--panel);border:1px solid var(--border);
-    border-radius:1.4vmin;padding:3.5vmin 4vmin;}
-  .reference .label{font-family:'Space Mono',monospace;font-size:1.5vmin;font-weight:700;
-    letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin-bottom:1.6vmin;}
-  .reference > p{font-size:2.2vmin;color:var(--silver);line-height:1.5;max-width:90ch;}
-  .reference > p strong{color:var(--steel-white);}
-  .unlock{margin-top:2.4vmin;font-family:'Space Mono',monospace;font-size:1.7vmin;font-weight:700;
-    background:transparent;border:1px solid var(--green);color:var(--green);border-radius:.8vmin;
-    padding:1.4vmin 2.4vmin;cursor:pointer;}
-  .unlock:hover{background:var(--green);color:#04210f;}
+  .reference{margin-top:4vmin;background:var(--archer-white);border:var(--line);
+    border-radius:var(--radius);padding:3.5vmin 4vmin;box-shadow:var(--shadow-hard);}
+  .reference .label{background:var(--archer-blue);}
+  .reference > p{font-size:2.2vmin;line-height:1.5;max-width:90ch;}
+  .unlock{margin-top:2.4vmin;background:var(--archer-blue);border:2.5px solid var(--archer-blue);
+    color:var(--archer-blueish-white);font-size:2.4vmin;padding:1.1vmin 2.8vmin;}
+  .unlock:hover{background:var(--archer-ink);border-color:var(--archer-ink);}
   .refgrid{display:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.4vmin;margin-top:3vmin;}
   .refgrid.open{display:grid;}
-  .reffile .fname{font-family:'Space Mono',monospace;font-size:1.5vmin;color:var(--amber);margin-bottom:.4vmin;}
-  .reffile .fnote{font-size:1.6vmin;color:var(--dove);margin-bottom:.6vmin;}
+  .reffile .fname{font-family:var(--font-display);font-weight:600;font-size:2.2vmin;color:var(--archer-blue);margin-bottom:.2vmin;}
+  .reffile .fnote{font-size:1.6vmin;color:var(--archer-grey);margin-bottom:.6vmin;}
   .reffile.wide{grid-column:1 / -1;}
 
   /* ---------- lessons strip ---------- */
-  .lessons{margin-top:3vmin;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vmin;}
-  .lesson{background:var(--panel);border:1px solid var(--border);border-radius:1vmin;padding:2.2vmin 2.4vmin;}
-  .lesson .li{font-size:2.6vmin;margin-bottom:.8vmin;}
-  .lesson h4{font-size:2.2vmin;margin-bottom:.6vmin;}
-  .lesson p{font-size:1.75vmin;line-height:1.5;color:var(--silver);}
+  .lessons{margin-top:4vmin;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vmin;counter-reset:lesson;}
+  .lesson{background:var(--archer-white);border:var(--line);border-radius:var(--radius);padding:2.2vmin 2.4vmin;}
+  .lesson .li{font-size:0;margin-bottom:1.2vmin;counter-increment:lesson;}
+  .lesson .li::before{content:counter(lesson,decimal-leading-zero);}
+  .lesson h4{font-family:var(--font-display);font-weight:600;font-size:2.8vmin;line-height:1.05;margin-bottom:.8vmin;}
+  .lesson p{font-size:1.75vmin;line-height:1.5;}
 
   /* ---------- timer (bottom-right, fixed) ---------- */
   .timer{position:fixed;bottom:3vmin;right:3vmin;z-index:50;
-    background:var(--panel);border:1px solid var(--border);border-radius:1.4vmin;
-    padding:2.4vmin 2.8vmin;box-shadow:0 1.5vmin 4vmin rgba(0,0,0,.6);
-    display:flex;flex-direction:column;gap:1.8vmin;min-width:34vmin;}
-  .timer .clock{font-family:'Space Mono',monospace;font-size:6vmin;font-weight:700;
-    color:var(--green);text-align:center;line-height:1;letter-spacing:.04em;}
-  .timer .clock.warn-time{color:var(--red);}
+    background:var(--archer-white);border:var(--line);border-radius:var(--radius);
+    padding:2.2vmin 2.6vmin;box-shadow:var(--shadow-hard);
+    display:flex;flex-direction:column;gap:1.6vmin;min-width:34vmin;}
+  .timer .clock{font-family:var(--font-display);font-size:7.5vmin;font-weight:900;
+    color:var(--archer-ink);text-align:center;line-height:.95;letter-spacing:.02em;font-variant-numeric:tabular-nums;}
+  .timer .clock.warn-time{color:var(--archer-red);}
   .timer .presets{display:flex;gap:1vmin;justify-content:center;}
-  .timer .presets button{font-family:'Space Mono',monospace;font-size:1.5vmin;
-    background:var(--panel-2);border:1px solid var(--border);color:var(--silver);
-    border-radius:.6vmin;padding:.9vmin 1.4vmin;cursor:pointer;transition:.15s;}
-  .timer .presets button:hover{border-color:var(--green);color:var(--green);}
-  .timer .presets button.sel{background:var(--green);color:#04210f;border-color:var(--green);font-weight:700;}
+  .timer button{font-family:var(--font-display);font-weight:600;letter-spacing:.02em;cursor:pointer;
+    border-radius:var(--pill);transition:background-color .15s,color .15s,border-color .15s;}
+  .timer .presets button{font-size:1.9vmin;background:transparent;border:1.5px solid var(--archer-ink);
+    color:var(--archer-ink);padding:.5vmin 1.6vmin;}
+  .timer .presets button:hover{border-color:var(--archer-blue);color:var(--archer-blue);}
+  .timer .presets button.sel{background:var(--archer-ink);color:var(--archer-blueish-white);border-color:var(--archer-ink);}
   .timer .controls{display:flex;gap:1vmin;}
-  .timer .controls button{flex:1;font-family:'Space Mono',monospace;font-size:1.6vmin;
-    border-radius:.7vmin;padding:1.1vmin;cursor:pointer;transition:.15s;
-    border:1px solid var(--border);background:var(--panel-2);color:var(--silver);
-    display:flex;align-items:center;justify-content:center;gap:.6vmin;}
-  .timer #start{border-color:var(--green);color:var(--green);}
-  .timer #start:hover{background:var(--green);color:#04210f;}
-  .timer #pause{border-color:#d9a441;color:#d9a441;}
-  .timer #pause:hover{background:#d9a441;color:#211803;}
-  .timer #reset:hover{background:var(--panel);color:var(--steel-white);}
+  .timer .controls button{flex:1;font-size:1.9vmin;padding:.9vmin;
+    border:2px solid var(--archer-ink);background:transparent;color:var(--archer-ink);
+    display:flex;align-items:center;justify-content:center;gap:.6vmin;white-space:nowrap;}
+  .timer .controls button:hover{color:var(--archer-blue);border-color:var(--archer-blue);}
+  .timer #start{background:var(--archer-blue);border-color:var(--archer-blue);color:var(--archer-blueish-white);}
+  .timer #start:hover{background:var(--archer-ink);border-color:var(--archer-ink);color:var(--archer-blueish-white);}
 
   /* ---------- footer ---------- */
-  .footer{display:flex;justify-content:space-between;align-items:center;
-    margin-top:5vmin;font-family:'Space Mono',monospace;font-size:1.5vmin;color:var(--dove);}
-  .footer .brand{color:var(--silver);}
-  .footer .brand b{color:var(--steel-white);}
+  .footer{display:flex;justify-content:space-between;align-items:center;gap:2vmin;flex-wrap:wrap;
+    margin-top:5vmin;padding-top:2vmin;border-top:var(--line-thin);font-size:1.6vmin;color:var(--archer-grey);}
+  .footer .brand{display:flex;align-items:center;gap:1.4vmin;color:var(--archer-ink);}
+  .footer .brand svg{height:max(30px,3.4vmin);width:auto;display:block;}
 
   @media (max-aspect-ratio: 1/1){
     .layout{grid-template-columns:1fr;}
@@ -280,38 +310,39 @@
     .lessons{grid-template-columns:1fr;}
   }
 
-  .tree{margin-top:2vmin;font-family:'Space Mono',monospace;font-size:1.65vmin;
-    line-height:1.75;color:var(--silver);background:#0a0c0a;border:1px solid var(--border);
-    border-radius:.9vmin;padding:2vmin 2.6vmin;white-space:pre;overflow-x:auto;}
-  .tree b{color:var(--green);font-weight:400;}
-  .tree i{color:var(--dove);font-style:normal;}
+  .tree{margin-top:2vmin;font-family:var(--font-mono);font-size:1.65vmin;
+    line-height:1.75;color:var(--archer-blueish-white);background:var(--archer-ink);
+    border-radius:var(--radius);padding:2vmin 2.6vmin;white-space:pre;overflow-x:auto;}
+  .tree b{color:var(--archer-neon-yellow);font-weight:400;}
+  .tree i{color:var(--archer-light-blue);font-style:normal;}
 </style>
 </head>
 <body>
 <div class="page">
+  <header class="topbar"><span class="logo"><svg role="img" aria-label="Archer" xmlns="http://www.w3.org/2000/svg" viewBox="-0.25 0.0 802.25 325.0" fill="none"><g id="logo"><path d="M1.5 231.66L1.5 319.64C1.5 321.77 3.23 323.5 5.36 323.5L371.8 323.5C372.21 323.5 372.63 323.46 373.04 323.37L737.24 243.28C740.12 242.65 742.31 240.29 742.73 237.37L757.04 136.26C757.25 134.76 758.31 133.53 759.76 133.1L788.52 124.5C790.2 123.99 791.44 122.56 791.68 120.82L800.61 58.2C801.17 54.27 799.84 50.25 797.08 47.4C795.27 45.54 792.81 44.41 790.22 44.27L782.16 43.84C779.52 43.69 776.87 44.05 774.36 44.88L764.57 48.12C764.57 48.12 761.21 43.62 753.35 43.98L704.27 43.98C702.96 43.98 701.66 44.25 700.46 44.77L683.08 52.24C669.71 41 634.21 26.13 569.07 62.76C564.28 53.37 548.43 37.12 523.39 47.26L528.89 9.59C529.51 5.33 526.2 1.5 521.89 1.5L466.04 1.5C463.82 1.5 461.65 2.14 459.79 3.34L402.23 40.32C388 39.26 355.03 41.46 336.9 58.74L336.9 50.29C336.9 47.1 334.31 44.5 331.12 44.5L311.6 44.5C308.9 44.5 306.27 45.36 304.08 46.94L301 49.16L297.25 46.39C295.59 45.17 293.59 44.5 291.52 44.5L243.75 44.5L249.02 10C249.61 6.1 246.6 2.6 242.66 2.6L144.01 2.6C142.89 2.6 141.86 3.17 141.27 4.12L2.27 228.96C1.77 229.77 1.5 230.71 1.5 231.66Z" fill="#212121" stroke="white" stroke-width="3"/><g id="wordmark"><path d="M487.96 229.96L437 229.96L467.6 11.91L518.43 12.21L512.33 54.26L497.49 95.79L501.7 95.79C517.56 50.67 535.19 54.36 544.53 54.5C553.86 54.64 570.16 69.66 568.43 95.79L549.61 229.96L498.61 229.96L513.87 120.8C514.74 115.29 512.58 113.21 509.69 113.21C506.79 113.21 503.84 115.19 503.26 120.99L487.96 229.96Z" fill="white"/><path d="M369.62 232.56L369.33 232.56C331.63 232.56 315.68 213.71 320.9 176.6L330.76 105.84C335.98 68.44 357.73 49.88 394.84 49.88L395.13 49.88C431.96 49.88 448.52 67.63 444.17 102.43L439.14 138.29L388.16 138.29L393.21 102.34C393.79 97.7 391.51 95.98 388.46 95.98C385.42 95.98 383.33 98.25 382.46 103.47L371.94 178.63C371.07 184.14 372.67 186.46 375.72 186.46C378.76 186.46 381.23 184.59 382.39 179.66L386.82 148.01L437.8 148.01L433.28 179.72C427.77 214.52 405.86 232.56 369.62 232.56Z" fill="white"/><path d="M616.47 232.5L616.76 232.5C653.01 232.5 674.36 214.49 679.87 179.69L684.29 148.06L633.31 148.06L628.88 179.75C627.72 184.68 625.6 186.39 622.56 186.39C619.51 186.39 617.56 184.16 618.43 178.65L624.05 138.36L634.35 138.36L685.67 138.36L690.71 102.3C695.06 67.5 679.1 49.81 642.28 49.81L641.99 49.81C604.87 49.81 582.88 68.46 577.66 105.86L567.76 176.53C562.54 213.65 578.77 232.5 616.47 232.5ZM637.68 112.47L628.28 112.47L629.52 103.46C630.39 98.24 632.21 95.82 635.26 95.82C638.3 95.82 639.68 97.63 639.1 102.27L637.68 112.47Z" fill="white"/><path d="M219.2 229.94L270.15 229.94L282.96 138.87C285.28 122.34 295.09 112.55 309.59 112.55L319.62 112.55L327.73 54.4L320.24 54.4C320.19 54.4 320.14 54.4 320.08 54.4C310.14 54.5 299.46 62.29 290.33 80.37C288.05 84.87 285.87 90.01 283.83 95.82L279.63 95.82L294.82 54.4L243.77 54.4L219.2 229.94Z" fill="white"/><path d="M683.12 229.94L734.07 229.94L746.88 138.87C749.2 122.34 759.01 112.55 773.51 112.55L783.54 112.55L791.65 54.4L784.16 54.4C784.11 54.4 784.06 54.4 784.01 54.4C774.06 54.5 763.38 62.29 754.25 80.37C751.97 84.87 749.79 90.01 747.75 95.82L743.55 95.82L758.74 54.4L707.69 54.4L683.12 229.94Z" fill="white"/><path d="M86.14 229.92L151.17 11.97L200.83 11.97L238.69 11.97L208.17 229.92L155.1 229.92L168.64 148.06L159.6 148.06L140.4 229.92L86.14 229.92ZM172.6 89.54L161.74 138.35L170 138.35L179.77 89.54L172.6 89.54Z" fill="white"/></g></g></svg></span><span class="course">AI Coding Agents Workshop</span></header>
   <div class="kicker">Exercise 4 · Day 1 · Extension layer · 4-min demo in class, full version as homework</div>
-  <h1>MCP: current docs <span class="accent">upstream</span>, a gate <span class="accent-r">downstream</span> 🔌</h1>
+  <h1>MCP: current docs <span class="accent">upstream</span>, a gate <span class="accent-r">downstream</span></h1>
   <div class="objective">
-    <div class="label">🎯 Objective</div>
+    <div class="label">Objective</div>
     <p>Agents write code against the APIs they were trained on, and your lockfile is newer than their training data. The result passes every test and uses an API the library already deprecated. Watch that happen on a real Ledgerly ticket, connect <strong>Context7</strong> so the agent can read the docs for the versions you run, add the rule that makes it look, and then make deprecated APIs a <strong>failing test</strong>, so the finish line from Ex 3 enforces it.</p>
   </div>
   <div class="goals">
-    <div class="goal"><div class="gi">📅</div><p>See <strong>outdated-library drift</strong>: working code, green tests, a deprecated API.</p></div>
-    <div class="goal"><div class="gi">🔌</div><p>Add an MCP server at <strong>project scope</strong> with <code>.mcp.json</code>, and verify with <code>/mcp</code>.</p></div>
-    <div class="goal"><div class="gi">📏</div><p>Pair a capability with a <strong>rule</strong> that says when to use it.</p></div>
-    <div class="goal"><div class="gi">🔒</div><p>Enforce downstream: <strong>warnings as errors</strong> for code you own.</p></div>
-    <div class="goal"><div class="gi">💰</div><p>Measure what an MCP server costs in <code>/context</code>.</p></div>
+    <div class="goal"><div class="gi"></div><p>See <strong>outdated-library drift</strong>: working code, green tests, a deprecated API.</p></div>
+    <div class="goal"><div class="gi"></div><p>Add an MCP server at <strong>project scope</strong> with <code>.mcp.json</code>, and verify with <code>/mcp</code>.</p></div>
+    <div class="goal"><div class="gi"></div><p>Pair a capability with a <strong>rule</strong> that says when to use it.</p></div>
+    <div class="goal"><div class="gi"></div><p>Enforce downstream: <strong>warnings as errors</strong> for code you own.</p></div>
+    <div class="goal"><div class="gi"></div><p>Measure what an MCP server costs in <code>/context</code>.</p></div>
   </div>
   <div class="rail" id="rail">
-    <a class="node red" href="#s0" data-step="0"><div class="k">Step 0</div><div class="v">🔴 Deprecated</div><div class="t">5 min</div></a>
+    <a class="node red" href="#s0" data-step="0"><div class="k">Step 0</div><div class="v">Deprecated</div><div class="t">5 min</div></a>
     <div class="arrow">→</div>
-    <a class="node" href="#s1" data-step="1"><div class="k">Step 1</div><div class="v">🔌 Connect</div><div class="t">4 min</div></a>
+    <a class="node" href="#s1" data-step="1"><div class="k">Step 1</div><div class="v">Connect</div><div class="t">4 min</div></a>
     <div class="arrow">→</div>
-    <a class="node" href="#s2" data-step="2"><div class="k">Step 2</div><div class="v">🟢 Use it</div><div class="t">5 min</div></a>
+    <a class="node" href="#s2" data-step="2"><div class="k">Step 2</div><div class="v">Use it</div><div class="t">5 min</div></a>
     <div class="arrow">→</div>
-    <a class="node" href="#s3" data-step="3"><div class="k">Step 3</div><div class="v">🔒 Enforce</div><div class="t">4 min</div></a>
+    <a class="node" href="#s3" data-step="3"><div class="k">Step 3</div><div class="v">Enforce</div><div class="t">4 min</div></a>
     <div class="arrow">→</div>
-    <a class="node" href="#s4" data-step="4"><div class="k">Step 4</div><div class="v">💰 Cost</div><div class="t">2 min</div></a>
+    <a class="node" href="#s4" data-step="4"><div class="k">Step 4</div><div class="v">Cost</div><div class="t">2 min</div></a>
   </div>
   <div class="layout">
     <div class="steps">
@@ -319,7 +350,7 @@
       <div class="step red-step" id="s0" data-step="0">
         <div class="n">0</div>
         <div>
-          <div class="head"><h3>🔴 Code that works on an API that's already gone</h3><span class="chip r">5 min · red</span></div>
+          <div class="head"><h3>Code that works on an API that's already gone</h3><span class="chip r">5 min · red</span></div>
           <div class="promptbox shell">
             <div class="tag">▶ Run in your terminal (workshop root) <button class="copy">⧉ copy</button></div>
             <p>tools/start.sh led-141 &amp;&amp; cd ledgerly &amp;&amp; claude</p>
@@ -342,12 +373,12 @@ variable LEDGERLY_SEED=1 is set, seed two demo invoices when the application sta
    => <span class="f">RED (2 failing)</span>
    <span class="d">← typical; a model may also get it right by luck</span></div>
           <p class="why"><b>Why</b>The tests are green and the feature works, but the agent wrote <code>@app.on_event</code>, which FastAPI deprecated several versions before the one in <code>uv.lock</code>. Training data is older than your lockfile, and the stale README ("Flask 1.1") doesn't help. This drift ships quietly and breaks on the next upgrade.</p>
-          <div class="accept"><div class="lbl">✅ Acceptance criteria</div>
+          <div class="accept"><div class="lbl">Acceptance criteria</div>
             <div class="checks">
               <div><code>tools/check.sh led-141</code> shows <strong>no-deprecated-apis</strong> red (or note that yours was lucky).</div>
             </div>
           </div>
-          <div class="hints"><div class="hl">💡 Stuck? Hints unlock in order</div>
+          <div class="hints"><div class="hl">Stuck? Hints unlock in order</div>
             <details><summary><span class="lv">1 · nudge</span>It passed for me</summary>
               <div class="body">Then this model knew the current API. Run <code>tools/run_drill.sh led-141 none 3</code> for a rate, or see the typical red: <code>tools/demo_reference.sh led-141 red</code>.</div></details>
             <details class="locked"><summary><span class="lv">2 · specific</span>How is this detected?</summary>
@@ -362,7 +393,7 @@ variable LEDGERLY_SEED=1 is set, seed two demo invoices when the application sta
       <div class="step" id="s1" data-step="1">
         <div class="n">1</div>
         <div>
-          <div class="head"><h3>🔌 Connect Context7: current docs, on demand</h3><span class="chip">4 min</span></div>
+          <div class="head"><h3>Connect Context7: current docs, on demand</h3><span class="chip">4 min</span></div>
           <p class="task">Add the Context7 MCP server <strong>at project scope</strong>, so the whole team gets it through git. Then check it's connected and what it costs.</p>
           <div class="promptbox">
             <div class="tag">▶ Create ledgerly/.mcp.json <button class="copy">⧉ copy</button></div>
@@ -382,13 +413,13 @@ variable LEDGERLY_SEED=1 is set, seed two demo invoices when the application sta
 <span class="c-cmt"># /context  → note the MCP tools line</span></p>
           </div>
           <p class="why"><b>Why</b>MCP adds <strong>tools</strong>, not instructions: <code>resolve-library-id</code> finds the library, <code>query-docs</code> returns docs for the version you ask about. Every tool's schema loads into <strong>every</strong> session (Context slide: one uncurated server can cost more than the whole conversation). Project scope (<code>.mcp.json</code>) travels with the repo; user scope (<code>claude mcp add --scope user</code>) is just you, the same trap as Ex 1 Step 6.</p>
-          <div class="accept"><div class="lbl">✅ Acceptance criteria</div>
+          <div class="accept"><div class="lbl">Acceptance criteria</div>
             <div class="checks">
               <div><code>/mcp</code> shows <strong>context7 · connected</strong>.</div>
               <div>You wrote down the MCP tools token count from <code>/context</code>.</div>
             </div>
           </div>
-          <div class="hints"><div class="hl">💡 Stuck? Hints unlock in order</div>
+          <div class="hints"><div class="hl">Stuck? Hints unlock in order</div>
             <details><summary><span class="lv">1 · nudge</span>It asks to approve the server</summary>
               <div class="body">Project-scoped servers need a one-time approval per user: that's a security feature, not an error.</div></details>
             <details class="locked"><summary><span class="lv">2 · specific</span>Rate-limited?</summary>
@@ -403,7 +434,7 @@ variable LEDGERLY_SEED=1 is set, seed two demo invoices when the application sta
       <div class="step" id="s2" data-step="2">
         <div class="n">2</div>
         <div>
-          <div class="head"><h3>🟢 Tell the agent when to use it</h3><span class="chip r">5 min · red → green</span></div>
+          <div class="head"><h3>Tell the agent when to use it</h3><span class="chip r">5 min · red → green</span></div>
           <p class="task">A connected tool the agent never calls changes nothing. Add a rule that says <strong>when</strong> to consult it, then rerun the same ticket.</p>
           <div class="promptbox">
             <div class="tag">▶ ledgerly/.claude/rules/libraries.md <button class="copy">⧉ copy</button></div>
@@ -425,12 +456,12 @@ cd .. &amp;&amp; tools/check.sh led-141</p>
    <span class="p">PASS</span>  looked-up-current-docs
    => <span class="p">GREEN</span></div>
           <p class="why"><b>Why</b>This is Ex 1–2 again: MCP is a <strong>capability</strong>, the rule is the <strong>instruction</strong> that makes the agent reach for it. It's still advisory: you get a rate. That's why Step 3 exists.</p>
-          <div class="accept"><div class="lbl">✅ Acceptance criteria</div>
+          <div class="accept"><div class="lbl">Acceptance criteria</div>
             <div class="checks">
               <div><code>tools/check.sh led-141</code> → <strong>GREEN</strong>: the transcript shows <code>mcp__context7__…</code> calls and the code uses <code>lifespan</code>.</div>
             </div>
           </div>
-          <div class="hints"><div class="hl">💡 Stuck? Hints unlock in order</div>
+          <div class="hints"><div class="hl">Stuck? Hints unlock in order</div>
             <details><summary><span class="lv">1 · nudge</span>It didn't call context7</summary>
               <div class="body">Did the rule load? <code>/context</code> should list <code>.claude/rules/libraries.md</code>. Or say "use context7" in the prompt once to see the tool work.</div></details>
             <details class="locked"><summary><span class="lv">2 · specific</span>looked-up passes but deprecated fails</summary>
@@ -445,7 +476,7 @@ cd .. &amp;&amp; tools/check.sh led-141</p>
       <div class="step" id="s3" data-step="3">
         <div class="n">3</div>
         <div>
-          <div class="head"><h3>🔒 Make it enforced, not just likely</h3><span class="chip">4 min</span></div>
+          <div class="head"><h3>Make it enforced, not just likely</h3><span class="chip">4 min</span></div>
           <p class="task">Turn "don't use deprecated APIs" into a test failure for Ledgerly's own code. This edits <code>pyproject.toml</code>, which your Ex 3 fence routes to a human: <strong>you</strong> make this change, not the agent.</p>
           <div class="promptbox shell">
             <div class="tag">▶ 1 · Put the deprecated version in place <button class="copy">⧉ copy</button></div>
@@ -461,13 +492,13 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
             <p>uv --directory ledgerly run pytest -q<span class="c-cmt">      # now FAILS: on_event is deprecated…</span></p>
           </div>
           <p class="why"><b>Why</b>MCP fixes it <strong>upstream</strong> (better knowledge, advisory). The warning filter fixes it <strong>downstream</strong> (a gate, deterministic), and your Ex 3 finish line now refuses "done" on it automatically. The <code>:ledgerly</code> part limits it to warnings raised from our modules, so a library's own internals can't break the build.</p>
-          <div class="accept"><div class="lbl">✅ Acceptance criteria</div>
+          <div class="accept"><div class="lbl">Acceptance criteria</div>
             <div class="checks">
               <div>Before the line: <code>pytest</code> green on deprecated code. After it: <strong>fails</strong> on the <code>on_event</code> line.</div>
               <div><code>tools/reset.sh --keep-memory</code> afterwards puts the code and <code>pyproject.toml</code> back. In your own repos, commit the line.</div>
             </div>
           </div>
-          <div class="hints"><div class="hl">💡 Stuck? Hints unlock in order</div>
+          <div class="hints"><div class="hl">Stuck? Hints unlock in order</div>
             <details><summary><span class="lv">1 · nudge</span>pytest still passes</summary>
               <div class="body">The line must sit inside the <code>[tool.pytest.ini_options]</code> table, next to <code>addopts</code>, not at the end of the file under another table.</div></details>
             <details class="locked"><summary><span class="lv">2 · specific</span>Why not `error::DeprecationWarning` for everything?</summary>
@@ -482,7 +513,7 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
       <div class="step" id="s4" data-step="4">
         <div class="n">4</div>
         <div>
-          <div class="head"><h3>💰 What did the server cost?</h3><span class="chip">2 min</span></div>
+          <div class="head"><h3>What did the server cost?</h3><span class="chip">2 min</span></div>
           <p class="task">Compare <code>/context</code> with and without the server. Then decide: is it worth loading in <strong>every</strong> session, or only in some?</p>
           <table class="diag">
             <tr><th></th><th>MCP tools tokens</th><th>notes</th></tr>
@@ -491,12 +522,12 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
             <tr><td>your judgement</td><td></td><td>always on · per-task · user scope?</td></tr>
           </table>
           <p class="why"><b>Why</b>Every connected server's tool schemas are paid on every turn. Two small tools are cheap; an uncurated server with 40 tools isn't. Curate: project scope for what the whole team needs every day, <code>/mcp</code> to disable per session, user scope for personal tools.</p>
-          <div class="accept"><div class="lbl">✅ Acceptance criteria</div>
+          <div class="accept"><div class="lbl">Acceptance criteria</div>
             <div class="checks">
               <div>You can state the token cost of context7 and where you'd scope it.</div>
             </div>
           </div>
-          <div class="hints"><div class="hl">💡 Stuck? Hints unlock in order</div>
+          <div class="hints"><div class="hl">Stuck? Hints unlock in order</div>
             <details><summary><span class="lv">1 · nudge</span>Where's the number?</summary>
               <div class="body"><code>/context</code> → the <strong>MCP tools</strong> line.</div></details>
             <details class="locked"><summary><span class="lv">2 · specific</span>How do I turn it off for one session?</summary>
@@ -514,18 +545,18 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
     <div class="side">
 
       <div class="infobox ">
-        <div class="label">🔌 MCP in one line</div>
+        <div class="label">MCP in one line</div>
         <p><strong>Tools, not instructions.</strong> A server adds callable tools; their schemas load into every session. A rule or skill decides <em>when</em> they're used.</p>
       </div>
 
       <div class="infobox warn">
-        <div class="big">📅</div>
+        <div class="big"></div>
         <div class="head">Training data &lt; your lockfile</div>
         <div class="note">Green tests can still mean a deprecated API. Detect it (warnings as errors), prevent it (current docs).</div>
       </div>
 
       <div class="infobox ok">
-        <div class="label">🧭 Upstream vs downstream</div>
+        <div class="label">Upstream vs downstream</div>
         <div class="cmds">
           <div><span class="c">Context7 (MCP)</span><span class="e">better knowledge before writing: advisory</span></div>
           <div><span class="c">libraries.md (rule)</span><span class="e">says when to look it up: advisory</span></div>
@@ -535,14 +566,14 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
       </div>
 
       <div class="infobox ">
-        <div class="label">📍 Where servers live</div>
+        <div class="label">Where servers live</div>
         <p><strong>.mcp.json</strong> in the repo: the team, via git (approved once per user).</p>
         <p><strong>--scope user</strong>: just you, every project, the Ex 1 trap again.</p>
         <p><strong>--scope local</strong>: you, this repo only.</p>
       </div>
 
       <div class="infobox ok">
-        <div class="label">🧰 Your commands</div>
+        <div class="label">Your commands</div>
         <div class="cmds">
           <div><span class="c">tools/start.sh led-141</span><span class="e">baseline code, your memory kept</span></div>
           <div><span class="c">tools/check.sh led-141</span><span class="e">deprecated APIs? docs consulted?</span></div>
@@ -555,7 +586,7 @@ uv --directory ledgerly run pytest -q<span class="c-cmt">      # still green: th
   </div>
 
   <div class="reference" id="reference">
-    <div class="label">🔓 Reference implementation</div>
+    <div class="label">Reference implementation</div>
     <p>Finished? Compare with the reference: <strong>exercises/ex04-mcp/reference/</strong> (<code>.mcp.json</code> + the rule). Apply with <code>tools/apply_variant.sh exercises/ex04-mcp/reference</code>. The <code>filterwarnings</code> line is yours to add (Step 3).</p>
     <button class="unlock" id="unlock">I've finished, show me the reference</button>
     <div class="refgrid" id="refgrid">
@@ -593,14 +624,14 @@ filterwarnings = ["error::DeprecationWarning:ledgerly"]</pre>
   </div>
 
   <div class="lessons">
-    <div class="lesson"><div class="li">📅</div><h4>Your lockfile is newer than the model</h4><p>Green tests and a working feature can still be built on a deprecated API.</p></div>
-    <div class="lesson"><div class="li">🔌</div><h4>Capability + instruction</h4><p>A server adds tools; a rule decides when they're used. Neither alone changes behaviour reliably.</p></div>
-    <div class="lesson"><div class="li">🔒</div><h4>Enforce what you can detect</h4><p>If a drift is detectable (warnings), make it a failing test. The finish line does the rest.</p></div>
+    <div class="lesson"><div class="li"></div><h4>Your lockfile is newer than the model</h4><p>Green tests and a working feature can still be built on a deprecated API.</p></div>
+    <div class="lesson"><div class="li"></div><h4>Capability + instruction</h4><p>A server adds tools; a rule decides when they're used. Neither alone changes behaviour reliably.</p></div>
+    <div class="lesson"><div class="li"></div><h4>Enforce what you can detect</h4><p>If a drift is detectable (warnings), make it a failing test. The finish line does the rest.</p></div>
   </div>
 
   <div class="footer">
-    <div>⏱ <span id="dur-label">20 minutes</span> · Ledgerly · ex04-mcp</div>
-    <div class="brand"><b>LATENT</b> · AI Coding Agents Workshop</div>
+    <div><span id="dur-label">20 minutes</span> · Ledgerly · ex04-mcp</div>
+    <div class="brand"><svg role="img" aria-label="Archer" xmlns="http://www.w3.org/2000/svg" viewBox="-0.25 0.0 802.25 325.0" fill="none"><g id="logo"><path d="M1.5 231.66L1.5 319.64C1.5 321.77 3.23 323.5 5.36 323.5L371.8 323.5C372.21 323.5 372.63 323.46 373.04 323.37L737.24 243.28C740.12 242.65 742.31 240.29 742.73 237.37L757.04 136.26C757.25 134.76 758.31 133.53 759.76 133.1L788.52 124.5C790.2 123.99 791.44 122.56 791.68 120.82L800.61 58.2C801.17 54.27 799.84 50.25 797.08 47.4C795.27 45.54 792.81 44.41 790.22 44.27L782.16 43.84C779.52 43.69 776.87 44.05 774.36 44.88L764.57 48.12C764.57 48.12 761.21 43.62 753.35 43.98L704.27 43.98C702.96 43.98 701.66 44.25 700.46 44.77L683.08 52.24C669.71 41 634.21 26.13 569.07 62.76C564.28 53.37 548.43 37.12 523.39 47.26L528.89 9.59C529.51 5.33 526.2 1.5 521.89 1.5L466.04 1.5C463.82 1.5 461.65 2.14 459.79 3.34L402.23 40.32C388 39.26 355.03 41.46 336.9 58.74L336.9 50.29C336.9 47.1 334.31 44.5 331.12 44.5L311.6 44.5C308.9 44.5 306.27 45.36 304.08 46.94L301 49.16L297.25 46.39C295.59 45.17 293.59 44.5 291.52 44.5L243.75 44.5L249.02 10C249.61 6.1 246.6 2.6 242.66 2.6L144.01 2.6C142.89 2.6 141.86 3.17 141.27 4.12L2.27 228.96C1.77 229.77 1.5 230.71 1.5 231.66Z" fill="#212121" stroke="white" stroke-width="3"/><g id="wordmark"><path d="M487.96 229.96L437 229.96L467.6 11.91L518.43 12.21L512.33 54.26L497.49 95.79L501.7 95.79C517.56 50.67 535.19 54.36 544.53 54.5C553.86 54.64 570.16 69.66 568.43 95.79L549.61 229.96L498.61 229.96L513.87 120.8C514.74 115.29 512.58 113.21 509.69 113.21C506.79 113.21 503.84 115.19 503.26 120.99L487.96 229.96Z" fill="white"/><path d="M369.62 232.56L369.33 232.56C331.63 232.56 315.68 213.71 320.9 176.6L330.76 105.84C335.98 68.44 357.73 49.88 394.84 49.88L395.13 49.88C431.96 49.88 448.52 67.63 444.17 102.43L439.14 138.29L388.16 138.29L393.21 102.34C393.79 97.7 391.51 95.98 388.46 95.98C385.42 95.98 383.33 98.25 382.46 103.47L371.94 178.63C371.07 184.14 372.67 186.46 375.72 186.46C378.76 186.46 381.23 184.59 382.39 179.66L386.82 148.01L437.8 148.01L433.28 179.72C427.77 214.52 405.86 232.56 369.62 232.56Z" fill="white"/><path d="M616.47 232.5L616.76 232.5C653.01 232.5 674.36 214.49 679.87 179.69L684.29 148.06L633.31 148.06L628.88 179.75C627.72 184.68 625.6 186.39 622.56 186.39C619.51 186.39 617.56 184.16 618.43 178.65L624.05 138.36L634.35 138.36L685.67 138.36L690.71 102.3C695.06 67.5 679.1 49.81 642.28 49.81L641.99 49.81C604.87 49.81 582.88 68.46 577.66 105.86L567.76 176.53C562.54 213.65 578.77 232.5 616.47 232.5ZM637.68 112.47L628.28 112.47L629.52 103.46C630.39 98.24 632.21 95.82 635.26 95.82C638.3 95.82 639.68 97.63 639.1 102.27L637.68 112.47Z" fill="white"/><path d="M219.2 229.94L270.15 229.94L282.96 138.87C285.28 122.34 295.09 112.55 309.59 112.55L319.62 112.55L327.73 54.4L320.24 54.4C320.19 54.4 320.14 54.4 320.08 54.4C310.14 54.5 299.46 62.29 290.33 80.37C288.05 84.87 285.87 90.01 283.83 95.82L279.63 95.82L294.82 54.4L243.77 54.4L219.2 229.94Z" fill="white"/><path d="M683.12 229.94L734.07 229.94L746.88 138.87C749.2 122.34 759.01 112.55 773.51 112.55L783.54 112.55L791.65 54.4L784.16 54.4C784.11 54.4 784.06 54.4 784.01 54.4C774.06 54.5 763.38 62.29 754.25 80.37C751.97 84.87 749.79 90.01 747.75 95.82L743.55 95.82L758.74 54.4L707.69 54.4L683.12 229.94Z" fill="white"/><path d="M86.14 229.92L151.17 11.97L200.83 11.97L238.69 11.97L208.17 229.92L155.1 229.92L168.64 148.06L159.6 148.06L140.4 229.92L86.14 229.92ZM172.6 89.54L161.74 138.35L170 138.35L179.77 89.54L172.6 89.54Z" fill="white"/></g></g></svg><span>AI Coding Agents Workshop</span></div>
   </div>
 
 </div>
