@@ -1,6 +1,6 @@
 # Keeping coding agents from drifting
 
-*Latent · AI Coding Agents workshop · hands-on companion to the Fundamentals & Advanced decks*
+*Archer · AI Coding Agents workshop · hands-on companion to the Fundamentals & Advanced decks*
 
 Coding agents don't fail loudly. They drift: they follow a stale README, reuse the legacy
 helper, "fix" a test so it passes, declare done without running your gates. Each run looks fine

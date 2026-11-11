@@ -1,0 +1,35 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex04-mcp/img/mcp.png">
+<link rel="stylesheet" href="diagram.css"><title>MCP</title>
+<style>
+.flow .card{min-height:180px;display:flex;flex-direction:column;gap:6px;}
+.flow h3.m{font-family:var(--mono);font-size:19px;font-weight:600;}
+.lane{display:flex;flex-direction:column;gap:10px;}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 4 · MCP + Context7</div>
+  <h1>Your lockfile is <span class="red">newer than the model</span></h1>
+  <p class="sub">Training data is older than the libraries you pin, so working code can be built on an API that's already deprecated. Fix it upstream with current docs, and enforce it downstream with a gate.</p>
+</header>
+<div class="lane">
+  <div><span class="pill r">Without · LED-141 "seed demo data at startup"</span></div>
+  <div class="row flow">
+    <div class="card"><div class="k">What it knows</div><h3>training data</h3><p>FastAPI as it was when the model was trained</p></div>
+    <div class="arrow"></div>
+    <div class="card alert"><div class="k red">What it writes</div><h3 class="m">@app.on_event("startup")</h3><p>deprecated in the pinned FastAPI</p></div>
+    <div class="arrow"></div>
+    <div class="card"><div class="k">The result</div><h3>tests green ✓</h3><p>a DeprecationWarning nobody sees, until the next upgrade breaks it</p></div>
+  </div>
+</div>
+<div class="lane">
+  <div><span class="pill b">With · upstream knowledge + a downstream gate</span></div>
+  <div class="row flow">
+    <div class="card"><div class="k">Upstream · advisory</div><h3>Context7 (MCP) + a rule</h3><p><code>.mcp.json</code> adds resolve-library-id and query-docs; <code>libraries.md</code> says when to use them</p></div>
+    <div class="arrow"></div>
+    <div class="card"><div class="k">What it writes</div><h3 class="m">lifespan=…</h3><p>the current API, for the versions in <code>uv.lock</code></p></div>
+    <div class="arrow"></div>
+    <div class="card key"><div class="k">Downstream · deterministic</div><h3>warnings are errors</h3><p><code style="white-space:normal;word-break:break-all">filterwarnings = ["error::DeprecationWarning:ledgerly"]</code>, so Ex 3's finish line won't accept it</p></div>
+  </div>
+</div>
+<div class="card"><p style="font-size:16.5px"><b>MCP adds tools, not instructions.</b> Every server's tool schemas cost tokens in every session. Check the <code>/context</code> MCP line before you keep one on.</p></div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 4 · MCP + Context7</span></footer>
+</div></body></html>

@@ -1,0 +1,40 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../spectrum.png">
+<link rel="stylesheet" href="diagram.css"><title>Spectrum</title>
+<style>
+.scale{display:grid;grid-template-columns:3fr 1fr 3fr;gap:10px;align-items:center;}
+.scale .bar{height:12px;border-radius:999px;}
+.scale .det{background:var(--blue);}
+.scale .mid{border-top:1.5px dashed var(--ink);height:0;}
+.scale .adv{border:1.5px solid var(--ink);background:var(--white);}
+.ends{display:flex;justify-content:space-between;margin-top:10px;}
+.ends span{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.06em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;}
+.cards .card{min-height:200px;display:flex;flex-direction:column;padding:16px 14px;}
+.cards .card p{flex:1;}
+.cards .card.focus h3{color:var(--blue);}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">The through-line of both days</div>
+  <h1>From advisory (a rate) to <span class="blue">deterministic</span> (always)</h1>
+  <p class="sub">Instructions make the right behaviour likely. Code makes it certain. Each exercise moves one kind of rule to the left.</p>
+</header>
+<div>
+  <div class="scale"><div class="bar det"></div><div class="mid"></div><div class="bar adv"></div></div>
+  <div class="ends"><span class="blue">Deterministic · runs every time</span><span>Advisory · the agent reads it, mostly</span></div>
+</div>
+<div class="cards">
+  <div class="card focus"><h3>Hooks</h3><p>code on an event: deny, ask, block</p><div class="meta">Ex 3</div></div>
+  <div class="card focus"><h3>Gates</h3><p>tests, lint, import contracts, warnings as errors</p><div class="meta">Ex 4 · Ex 5</div></div>
+  <div class="card focus"><h3>Permissions</h3><p>settings.json allow / deny</p><div class="meta">Ex 3</div></div>
+  <div class="card dash"><h3>MCP</h3><p>adds tools (current docs), not instructions</p><div class="meta">Ex 4</div></div>
+  <div class="card"><h3>Skills</h3><p>procedures loaded on demand</p><div class="meta">Ex 2</div></div>
+  <div class="card"><h3>Rules</h3><p><code>.claude/rules/*.md</code></p><div class="meta">Ex 1</div></div>
+  <div class="card"><h3>CLAUDE.md</h3><p>project, directory, @imports</p><div class="meta">Ex 1</div></div>
+</div>
+<div class="row">
+  <div class="card"><div class="k">Example</div><p style="font-size:18px">"Never edit an existing test" in CLAUDE.md → the agent still does it in <b>some runs</b> (LED-103).</p></div>
+  <div class="arrow"></div>
+  <div class="card key"><div class="k">Same rule as a hook</div><p style="font-size:18px"><code>fence.py</code> denies the edit → <b>0 of 3</b> runs, by construction (Ex 3).</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ledgerly · AI Coding Agents Workshop</span></footer>
+</div></body></html>

@@ -1,0 +1,49 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../drill-loop.png">
+<link rel="stylesheet" href="diagram.css"><title>Drill loop</title>
+<style>
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.zone .k{margin:4px 0 14px;}
+.zone .card{padding:14px 16px;}
+.zone .card .mono{font-weight:600;font-size:15px;display:block;margin-bottom:4px;}
+.loop .card{min-height:220px;display:flex;flex-direction:column;gap:6px;}
+.loop .card h3{font-family:var(--mono);font-weight:600;font-size:19px;}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">The drill loop · same in every exercise</div>
+  <h1>The doer never sees the judge</h1>
+  <p class="sub">The agent works inside <code>ledgerly/</code> and reads whatever it finds there. Tickets, checks, hidden probes and answers live outside it.</p>
+</header>
+<div class="zones">
+  <div class="zone">
+    <h2><code>ledgerly/</code> · the doer's world</h2><div class="k">The agent sees everything here</div>
+    <div class="grid2">
+      <div class="card soft"><span class="mono">src/ · tests/</span><p>the code it changes</p></div>
+      <div class="card soft"><span class="mono">CLAUDE.md · .claude/</span><p>your memory files, rules, skills, hooks</p></div>
+      <div class="card soft"><span class="mono">docs/decisions/</span><p>the ADRs</p></div>
+      <div class="card soft"><span class="mono">git tag baseline</span><p>where reset returns</p></div>
+    </div>
+  </div>
+  <div class="zone blue-zone">
+    <h2><code>exercises/</code> + <code>tools/</code> · the judge's world</h2><div class="k blue">The agent never sees this</div>
+    <div class="grid2">
+      <div class="card"><span class="mono">prompt.md</span><p>the ticket, word for word</p></div>
+      <div class="card"><span class="mono">checks.json</span><p>what's graded, and why</p></div>
+      <div class="card"><span class="mono">probe_*.py</span><p>hidden judges: call the API, plant bugs</p></div>
+      <div class="card"><span class="mono">reference/</span><p>red/green examples, the mechanism</p></div>
+    </div>
+  </div>
+</div>
+<div class="row loop">
+  <div class="card"><div class="k">1 · Start</div><h3>tools/start.sh</h3><p>baseline code, your memory kept, the drill's start state applied</p></div>
+  <div class="arrow"></div>
+  <div class="card"><div class="k">2 · Agent</div><h3>claude in ledgerly/</h3><p>paste the ticket; let it work like it would on a real repo</p></div>
+  <div class="arrow"></div>
+  <div class="card focus"><div class="k blue">3 · Check</div><h3>tools/check.sh</h3><p>grades the repo diff, the gates, and the session transcript</p>
+    <div class="term"><span class="p">PASS</span> tests-pass
+<span class="f">FAIL</span> no-float-money
+=> <span class="f">RED (1 failing)</span></div></div>
+  <div class="arrow"></div>
+  <div class="card"><div class="k">4 · Reset</div><h3>tools/reset.sh</h3><p>back to baseline; <code>--keep-memory</code> keeps your CLAUDE.md files</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ledgerly · AI Coding Agents Workshop</span></footer>
+</div></body></html>

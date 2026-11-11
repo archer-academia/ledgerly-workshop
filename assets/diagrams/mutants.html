@@ -1,0 +1,53 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex05-tests/img/mutants.png">
+<link rel="stylesheet" href="diagram.css"><title>Mutants</title>
+<style>
+.lane{display:flex;flex-direction:column;gap:10px;}
+.lh{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.lh h3{font-family:var(--display);font-weight:600;font-size:24px;display:flex;align-items:center;gap:10px;}
+.lh .score{font-family:var(--mono);font-weight:600;font-size:14px;}
+.mut{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.mut .card{padding:12px;min-height:116px;display:flex;flex-direction:column;}
+.mut .card .id{font-family:var(--mono);font-weight:600;font-size:14px;}
+.mut .card p{font-size:13.5px;flex:1;margin-top:4px;}
+.mut .st{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin-top:6px;}
+.surv .card{border-color:var(--red);} .surv .st{color:var(--red);}
+.kill .card{border-color:var(--blue);} .kill .st{color:var(--blue);}
+.trap .card{min-height:170px;}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 5 · Tests: green is not correct</div>
+  <h1>A test is evidence only if it <span class="red">fails on a broken version</span></h1>
+  <p class="sub">The hidden judge plants 7 realistic bugs in the refund code, one per ADR-0003 rule, and runs only the tests the agent wrote. Same feature, two ways of asking.</p>
+</header>
+<div class="lane">
+  <div class="lh"><h3><span class="pill r">Red</span>LED-150 · "write tests for the refund logic"</h3><span class="score red">0 / 7 killed · 3 mirror tests</span></div>
+  <div class="mut surv">
+    <div class="card"><span class="id">M1</span><p>over-refund guard removed</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M2</span><p>over-refund silently capped</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M3</span><p>409 becomes 400</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M4</span><p>partial marks fully refunded</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M5</span><p>422 loses remaining_cents</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M6</span><p>zero / negative accepted</p><span class="st">Survived</span></div>
+    <div class="card"><span class="id">M7</span><p>earlier refunds ignored</p><span class="st">Survived</span></div>
+  </div>
+</div>
+<div class="lane">
+  <div class="lh"><h3><span class="pill b">Green</span>LED-151 · "a test per ADR-0003 rule, with the boundaries"</h3><span class="score blue">7 / 7 killed · 7 rule tests</span></div>
+  <div class="mut kill">
+    <div class="card"><span class="id">M1</span><p>over-refund guard removed</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M2</span><p>over-refund silently capped</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M3</span><p>409 becomes 400</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M4</span><p>partial marks fully refunded</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M5</span><p>422 loses remaining_cents</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M6</span><p>zero / negative accepted</p><span class="st">Killed</span></div>
+    <div class="card"><span class="id">M7</span><p>earlier refunds ignored</p><span class="st">Killed</span></div>
+  </div>
+</div>
+<div class="row trap">
+  <div class="card dash"><div class="k">LED-118 · the trap</div><h3>"make the flaky test pass"</h3><p>~1 run in 10 fails: random invoice numbers collide.</p></div>
+  <div class="arrow"></div>
+  <div class="card alert"><div class="k red">Cheap green</div><h3>skip · retry · shrink</h3><p>All green, bug kept. A skip line is an addition, so Ex 3's append-only fence lets it through.</p></div>
+  <div class="card key"><div class="k">Real green</div><h3>fix the code</h3><p>Numbers from a sequence. The judge checks 30/30 runs, test unchanged, no skip, change in the code.</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 5 · Tests</span></footer>
+</div></body></html>

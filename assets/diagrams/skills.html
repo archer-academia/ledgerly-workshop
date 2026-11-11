@@ -1,0 +1,53 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex02-skills/img/skills.png">
+<link rel="stylesheet" href="diagram.css"><title>Skills</title>
+<style>
+.lv{min-height:210px;display:flex;flex-direction:column;gap:6px;}
+.lv h3{font-size:25px;}
+.lv .cost{margin-top:auto;font-family:var(--mono);font-size:13.5px;font-weight:600;}
+.lv.focus .cost{color:var(--blue);}
+.bottom{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:stretch;}
+.q{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--ink);font-size:15.5px;}
+.q:first-of-type{border-top:0;}
+.q .y{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);white-space:nowrap;}
+.q .n{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--red);white-space:nowrap;}
+.term{white-space:pre-wrap;margin-top:12px;}
+.key p{margin-top:4px;}
+.key .term{background:var(--ink);}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 2 · Skills</div>
+  <h1>A skill is a procedure that loads <span class="blue">only when it's needed</span></h1>
+  <p class="sub">Three levels of progressive disclosure, then an eval: does it fire when it should, stay quiet when it shouldn't, and beat no skill at all?</p>
+</header>
+<div class="row">
+  <div class="card lv focus"><div class="k blue">Level 1 · always loaded</div><h3>name + description + when_to_use</h3><p>The model reads this to decide whether to fire. Vague here = never fires, or fires on everything.</p><div class="cost">~100 tokens · every session</div></div>
+  <div class="arrow"></div>
+  <div class="card lv"><div class="k">Level 2 · on trigger</div><h3>SKILL.md body</h3><p>The procedure. <code>!`git status`</code> fills in live context; <code>allowed-tools</code> fences what it may run.</p><div class="cost">loaded when it fires</div></div>
+  <div class="arrow"></div>
+  <div class="card lv"><div class="k">Level 3 · on demand</div><h3>reference.md · scripts/</h3><p>The PR format, <code>gates.py</code>. Read or run only if the procedure needs them.</p><div class="cost">0 tokens until used</div></div>
+</div>
+<div class="bottom">
+  <div class="card">
+    <div><span class="pill">The eval · tools/skill_eval.py</span></div>
+    <div style="margin-top:8px">
+      <div class="q"><span>"LED-105 is done. Can you make it reviewable?"</span><span class="y">should fire ✓</span></div>
+      <div class="q"><span>"Is this branch ready to ship?"</span><span class="y">should fire ✓</span></div>
+      <div class="q"><span>"How does fx.convert round? No changes."</span><span class="n">must stay quiet ×</span></div>
+      <div class="q"><span>"Rename count to paid_count."</span><span class="n">must stay quiet ×</span></div>
+    </div>
+    <div class="term"><span class="c">example report</span> · recall 4/4 · false fires 0/3 · quality with skill 4/4 vs without 0/4 → <span class="p">ship it</span></div>
+  </div>
+  <div class="card key">
+    <div class="k">context: fork</div>
+    <h3>adr-audit as a worker</h3>
+    <p>Runs in its own context with <code>agent: Explore</code>, <code>model: haiku</code>, read-only tools. Returns a short report; the main session stays clean.</p>
+    <div class="k" style="margin-top:14px">Every lecture option has a check</div>
+    <div class="term">when_to_use · argument-hint · allowed-tools
+!`cmd` · ${CLAUDE_SKILL_DIR} · reference.md
+context: fork · agent · model · effort
+disable-model-invocation</div>
+    <p style="margin-top:12px"><code>tools/skill_lint.py</code> checks them statically before you ever run the agent.</p>
+  </div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 2 · Skills</span></footer>
+</div></body></html>

@@ -1,0 +1,28 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../method.png">
+<link rel="stylesheet" href="diagram.css"><title>Method</title>
+<style>
+.cycle .card{display:flex;flex-direction:column;gap:8px;min-height:250px;}
+.loopback{display:flex;align-items:center;gap:14px;margin:-6px 120px 0;}
+.loopback i{flex:1;border-top:1.5px dashed var(--ink);}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">The method · TDD for agent behaviour</div>
+  <h1>See the drift <span class="red">fail</span>. Add one mechanism. Watch it go <span class="mark">green</span></h1>
+  <p class="sub">Every exercise is a <b>drill</b> (a fixed ticket) plus a <b>drift check</b> (a deterministic script that grades what the agent did and left behind).</p>
+</header>
+<div class="row cycle">
+  <div class="card alert"><div><span class="pill r">01 · Red</span></div><h3>Run without it</h3><p>The ticket, no mechanism. Tests often pass. The drift check fails, and says why.</p></div>
+  <div class="arrow"></div>
+  <div class="card key"><div><span class="pill" style="background:var(--bw);color:var(--ink)">02 · Green</span></div><h3>Add one mechanism</h3><p>A CLAUDE.md, a rule, a skill, a hook. Same ticket, same check. Now it passes.</p></div>
+  <div class="arrow"></div>
+  <div class="card"><div><span class="pill">03 · Refactor</span></div><h3>Make it smaller</h3><p>Fewer lines, better placed, cheaper in tokens. Still green.</p></div>
+  <div class="arrow"></div>
+  <div class="card dash"><div><span class="pill o">04 · Leftover</span></div><h3>The red it can't fix</h3><p>What this mechanism can't reach opens the next exercise.</p></div>
+</div>
+<div class="loopback"><i></i><span class="k" style="margin:0">The leftover red is the next exercise's step 0</span><i></i></div>
+<div class="grid2">
+  <div class="card"><h3>Loaded ≠ obeyed</h3><p>Every cycle has a <b>load check</b> (did it enter the context?) and a <b>behaviour check</b> (did it change what happened?).</p></div>
+  <div class="card"><h3>Measure in rates</h3><p>Agents are non-deterministic. A drill runs 3–5 times per variant, and 2/3 counts as a result.</p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ledgerly · AI Coding Agents Workshop</span></footer>
+</div></body></html>

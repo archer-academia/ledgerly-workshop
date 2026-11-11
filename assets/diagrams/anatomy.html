@@ -1,0 +1,24 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex00-orientation/img/anatomy.png">
+<link rel="stylesheet" href="diagram.css"><title>Anatomy</title></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 0 · Orientation · anatomy of an exercise</div>
+  <h1>Every exercise folder has the <span class="blue">same shape</span></h1>
+  <p class="sub">Learn it once in Ex 0 and you can find your way around Ex 1 to Ex 8. Left: the file. Middle: what it is. Right: the tool that uses it.</p>
+</header>
+<table class="t">
+  <tr><th style="width:30%">File</th><th>What it is</th><th style="text-align:right">Used by</th></tr>
+  <tr class="grp"><td colspan="3"><span class="pill">Read these</span></td></tr>
+  <tr><td class="f">exercise.html</td><td>the student page: steps, tickets to paste, hints that unlock in order, a timer, a locked reference</td><td class="u">your browser</td></tr>
+  <tr><td class="f">README.md</td><td>the purpose, the flow and timings, what each hidden judge checks, fallbacks</td><td class="u">you · the trainer</td></tr>
+  <tr><td class="f">LESSONS.md</td><td>the takeaways, plus a table where you write your own numbers</td><td class="u">you, at the end</td></tr>
+  <tr class="grp"><td colspan="3"><span class="pill">drills/&lt;ticket&gt;/ · one folder per ticket</span></td></tr>
+  <tr><td class="f in">prompt.md</td><td>the ticket, word for word, exactly what you paste into the agent</td><td class="u">you · run_drill.sh</td></tr>
+  <tr><td class="f in">checks.json</td><td>the list of checks; each has a <i>why</i> that prints when it fails</td><td class="u">check.sh · run_drill.sh</td></tr>
+  <tr><td class="f in">probe_*.py</td><td>hidden judges: call the API, plant bugs, read the diff</td><td class="u">the checker, never the agent</td></tr>
+  <tr><td class="f in">setup.sh</td><td>optional start state (e.g. a feature already built)</td><td class="u">start.sh</td></tr>
+  <tr><td class="f in">reference/</td><td>red.patch · green.patch: typical bad and good outcomes, hand-written</td><td class="u">demo_reference.sh</td></tr>
+  <tr class="grp"><td colspan="3"><span class="pill b">reference/ · the answer</span></td></tr>
+  <tr><td class="f">reference/</td><td>the mechanism that turns red green (CLAUDE.md, rules, skills, hooks…), laid out like ledgerly/</td><td class="u">apply_variant.sh</td></tr>
+</table>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 0 · Orientation</span></footer>
+</div></body></html>

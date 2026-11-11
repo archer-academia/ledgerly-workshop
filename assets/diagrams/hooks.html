@@ -1,0 +1,38 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="out" content="../../exercises/ex03-hooks/img/hooks.png">
+<link rel="stylesheet" href="diagram.css"><title>Hooks</title>
+<style>
+.hk{min-height:300px;display:flex;flex-direction:column;gap:8px;}
+.hk .file{font-family:var(--mono);font-weight:600;font-size:17px;color:var(--blue);margin-bottom:2px;}
+.hk .card{padding:10px 12px;border-width:1px;}
+.hk .card p{font-size:14.5px;}
+.v{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.05em;text-transform:uppercase;margin-right:6px;}
+.v.ok{color:var(--blue);} .v.no{color:var(--red);} .v.ask{color:var(--ink);}
+</style></head><body><div class="canvas">
+<header>
+  <div class="eyebrow">Ex 3 · Hooks · deterministic</div>
+  <h1>Code on every event. It runs <span class="blue">every time</span></h1>
+  <p class="sub">Three hooks wired in <code>.claude/settings.json</code> turn Ex 1's "usually" into "always". Test each one with JSON on stdin before you trust it.</p>
+</header>
+<div class="row">
+  <div class="card hk dash"><div class="k">The agent</div><h3>wants to Edit tests/test_tax.py</h3><p>LED-103: an impossible VAT ticket. The cheap way out is changing the test.</p></div>
+  <div class="arrow"></div>
+  <div class="card hk focus"><div class="k">PreToolUse · before</div><div class="file">fence.py</div>
+    <div class="card"><p><span class="v ok">allow</span>new tests, normal code</p></div>
+    <div class="card"><p><span class="v ask">ask</span>ruff.toml, .importlinter, tax.py, ADRs</p></div>
+    <div class="card"><p><span class="v no">deny</span>rewriting a test, .env, generated/, applied migrations, the hooks themselves</p></div></div>
+  <div class="arrow"></div>
+  <div class="card hk focus"><div class="k">PostToolUse · after each edit</div><div class="file">lint_edited.py</div>
+    <div class="card"><p>ruff format + fix, silently</p></div>
+    <div class="card"><p><span class="v no">block</span>+ reason only if it can't fix it</p></div></div>
+  <div class="arrow"></div>
+  <div class="card hk focus"><div class="k">Stop · "I'm done"</div><div class="file">finish_line.py</div>
+    <div class="card"><p>pytest · ruff · format · lint-imports</p></div>
+    <div class="card"><p><span class="v no">block</span>while red, max 3 times</p></div>
+    <div class="card"><p><span class="v ask">stop rule:</span>then let it stop and warn the human</p></div></div>
+</div>
+<div class="row">
+  <div class="card"><p style="font-size:16.5px"><b>Test hooks like code.</b> <code>python3 tools/hook_test.py</code>: 34 cases. The starter fails 8, the reference passes all.</p></div>
+  <div class="card key"><p style="font-size:16.5px"><b>LED-103 edits a test:</b> Ex 1 gave a rate. With the fence it's <b>0 of 3, by construction.</b></p></div>
+</div>
+<footer class="foot"><img src="logo.svg" alt="Archer"><span>Ex 3 · Hooks</span></footer>
+</div></body></html>
